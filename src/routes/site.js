@@ -5,8 +5,8 @@ const siteController = require('../app/controllers/SiteController');
 
 // newController.index;
 
-router.use('/search', siteController.search );
+router.use('/search', siteController.search);
 
-router.use('/', siteController.index );
+router.use('/', siteController.index);
 
-module.exports = router; 
+module.exports = router;
