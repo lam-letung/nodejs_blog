@@ -1,15 +1,28 @@
+const Course = require('../models/Course');
+const {
+    mumutipleMongooseToObjectltiple,
+    mutipleMongooseToObject,
+} = require('../../utils/mongoose');
 
 class SiteController {
+    // Get
+    index(req, res, next) {
+        // Get data db = promise
+        Course.find({})
+            .then((courses) => {
+                // convert array(handlebar) -> object
 
-    // Get 
-    index(req,res){
-        res.render('home');
+                res.render('home', {
+                    courses: mutipleMongooseToObject(courses),
+                });
+            })
+            .catch(next);
     }
 
-    // get /search  
-    search(req,res){
-        res.render('search')
+    // get /search
+    search(req, res) {
+        res.render('search');
     }
 }
 
-module.exports = new SiteController;
+module.exports = new SiteController();
