@@ -2,10 +2,14 @@ const express = require('express');
 const { engine } = require('express-handlebars');
 const morgan = require('morgan');
 const path = require('path');
-const app = express();
 const route = require('./routes');
+const app = express();
+const db = require('./config/db');
 
- app.use(express.static(path.join(__dirname, 'public')));
+// connect to db
+db.connect();
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 // HTTP Logger
 app.use(morgan('combined'));
@@ -20,7 +24,17 @@ app.engine(
 
 app.set('view engine', 'hbs');
 
-app.set('views', path.join(__dirname, 'resources/views'));
+app.set('views', path.join(__dirname, 'resources', 'views'));
+
+app.use(express.json());
+const bodyParser = require('body-parser');
+
+app.use(
+    bodyParser.urlencoded({
+        extended: true,
+    }),
+);
+app.use(bodyParser.json());
 
 // route init
 route(app);
